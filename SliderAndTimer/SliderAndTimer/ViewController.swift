@@ -37,7 +37,21 @@ class ViewController: UIViewController {
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(doSomethingAfterSecond), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] _ in
+            if number > 0 {
+                number -= 1
+                slider.value = Float(number) / Float(60)
+                mainLabel.text = "\(number)초"
+            } else {
+                number = 0
+                mainLabel.text = "초를 선택하세요"
+                timer?.invalidate() // 끝나면 timer invalidate
+                
+                //소리나게 하기
+                AudioServicesPlayAlertSound(SystemSoundID(1322))
+                
+            }
+        }
     }
 
     
