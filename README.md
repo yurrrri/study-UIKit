@@ -98,5 +98,6 @@ https://github.com/devxoul/Then <br/>
 
 로 바꿀 수 있다는 이야기다. <br/>
 
-**4. UIView.animate(withDuration: )을 통해 일정기간동안 뷰의 변화가 애니메이션을 통해 자연스럽게 일어날 수 있는 방법을 새롭게 접하고 적용했다.**
+**4. UIView.animate(withDuration: )을 통해 일정기간동안 뷰의 변화가 애니메이션을 통해 자연스럽게 발생할 수 있도록 적용**
 
+**5. Responder Chain과 firstResponder 개념 이해**
