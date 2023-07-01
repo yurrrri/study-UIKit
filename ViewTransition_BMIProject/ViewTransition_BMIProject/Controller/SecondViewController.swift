@@ -12,17 +12,19 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var resultNumberLabel: UILabel!
     @IBOutlet weak var bmiNumberLabel: UILabel!
     
-    var bmiNumber: Double?
-    var adviceString: String?
-    var bmiColor: UIColor?
+    // 얘를 묶어서 struct로
+//    var bmiNumber: Double?
+//    var adviceString: String?
+//    var bmiColor: UIColor?
+    var bmi: BMI?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bmiNumberLabel.text = "\(bmiNumber!)"
-        bmiNumberLabel.backgroundColor = bmiColor
-        resultNumberLabel.text = adviceString
-        
+        bmiNumberLabel.text = "\(bmi?.advice)"
+        bmiNumberLabel.backgroundColor = bmi?.color
+        resultNumberLabel.text = bmi?.advice
+                
         setupUI()
     }
     
