@@ -101,3 +101,16 @@ https://github.com/devxoul/Then <br/>
 **4. UIView.animate(withDuration: )을 통해 일정기간동안 뷰의 변화가 애니메이션을 통해 자연스럽게 발생할 수 있도록 적용**
 
 **5. Responder Chain과 firstResponder 개념 이해**
+
+## 3. BMI 계산기(화면 전환) 
+
+<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/efe8a3ce-f6a5-4d39-b40b-e5a6e5e386d5" width="300"/>
+
+### 배운점 및 회고
+
+**1. 화면 전환하는 방법 3가지에 대해 다시 짚고넘어갈 수 있었다.**
+- 코드로 된 VC와 스토리보드 VC로 화면 전환 및 데이터 전달
+- Segue 개념 및 데이터 전달
+
+**2. 기능 단위로 함수로 묶는 것이 코드의 가독성과 재사용성을 높인다.**
+- 의미 단위가 달라지면 반드시 함수를 따로 만들자.
