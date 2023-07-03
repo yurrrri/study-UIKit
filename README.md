@@ -1,6 +1,6 @@
 # study-UIKit
 
-앨런 Swift 문법 마스터스쿨 강의를 수강하며 다시한번 UIKit 전반에 대해 복습하고, 관련해서 배운 점과 고민한 내용에 대해 정리하는 레포입니다.
+앨런 Swift 문법 마스터스쿨 강의를 수강하며 UIKit 전반에 대해 복습하고, 관련해서 배운 점과 고민한 내용에 대해 정리하는 레포입니다.
 
 ## 1. 타이머와 슬라이더
 
@@ -23,11 +23,18 @@
 ```
    
 - 이 코드에서는 ViewController 인스턴스가 timer 인스턴스 속성을 가지고 있고, timer는 클로저를 가리키며 클로저는 ViewController 인스턴스를 가리키게 됨으로써 강한참조 사이클 발생
-- 여기서는 timer앞에 weak을 붙이거나 클로저의 캡쳐리스트를 약한 참조로 함으로써 [weak self]를 붙이는 방법을 통해 강한 참조 사이클을 해결할 수 있는데, weak self의 경우 self가 옵셔널로 가리킴으로 인해 번거로울 수 있으니 weak var timer: Timer?로 하게되면 강한 참조 사이클이 일어나지 않는다.
+- 여기서는 timer앞에 weak을 붙이거나 클로저의 캡쳐리스트를 약한 참조로 함으로써 [weak self]를 붙이는 방법을 통해 강한 참조 사이클을 해결할 수 있는데, weak self의 경우 self가 옵셔널로 가리킴으로 인해 번거로울 수 있으니 weak var timer: Timer?로 하게되면 강한 참조 사이클이 일어나지 않는다. <br/>
+
+**3. 클로저는 항상 weak self를 쓰면 좋을까?에 대한 고민** <br/>
+https://noah0316.github.io/Swift/2022-04-08-[weak-self]-%EB%AC%B4%EC%A1%B0%EA%B1%B4-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94%EA%B2%8C-%EB%A7%9E%EB%8A%94%EA%B1%B8%EA%B9%8C/
+
+- non-escaping 클로저는 메서드 실행이 끝나면 메모리에서 없어지기에 강한 참조 사이클을 발생시킬 수 없음 -> [weak self] 필요 X
+- escaping 클로저는 프로퍼티로 저장되거나, 클로저 안의 객체가 클로저에 대한 강한 참조를 유지하는 경우 강한 참조 사이클이 발생할 여지가 있으므로 -> [weak self] 필요 O
+- GCD와 애니메이션의 클로저는 escaping 클로저임에도 불구하고, 메모리에 잠깐 존재했다가 사라지는 개념이기 때문에 프로퍼티로 저장되지 않는 이상 -> [weak self] 필요 X 
 
 ## 2. 텍스트필드를 활용한 간단한 로그인 UI
 
-<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/9bc8d52f-221b-407b-81c2-9b3e43023fcf " width="200"/>
+<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/9bc8d52f-221b-407b-81c2-9b3e43023fcf " width="250"/>
 
 ### 배운점 및 회고 
 **1. 클로저 vs Then 라이브러리를 활용한 UI 인스턴스 초기화**
@@ -104,7 +111,7 @@ https://github.com/devxoul/Then <br/>
 
 ## 3. BMI 계산기(화면 전환) 
 
-<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/efe8a3ce-f6a5-4d39-b40b-e5a6e5e386d5" width="300"/>
+<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/efe8a3ce-f6a5-4d39-b40b-e5a6e5e386d5" width="250"/>
 
 ### 배운점 및 회고
 
@@ -114,3 +121,21 @@ https://github.com/devxoul/Then <br/>
 
 **2. 기능 단위로 함수로 묶는 것이 코드의 가독성과 재사용성을 높인다.**
 - 의미 단위가 달라지면 반드시 함수를 따로 만들자.
+
+## 4.앱 생명주기 / 뷰 컨트롤러 생명주기 / Drawing Cycle
+
+### 배운점 및 회고
+
+**1. 앱 생명주기의 전반적인 cycle 이해** <br/>
+**2. 뷰 컨트롤러 생명주기의 전반적인 cycle 이해 및 활용** <br/>
+**3. 뷰의 Drawing Cycle 및 setNeedsDisplay / setNeedsLayout / ifLayoutNeeded 차이 이해** <br/>
+
+## 5. Navigation / Tabbar Controller
+
+<img src="https://github.com/yurrrri/study-UIKit/assets/37764504/c4ea57f8-06c8-47cb-b8ec-d050280f6d5d" width="250"/>
+
+### 배운점 및 회고
+
+**1. 네비게이션 / 탭바 컨트롤러 각각 스토리보드 / 코드 방식 구현  이해** <br/>
+**2. 스토리보드 분리에 대한 이해** <br/>
+- 스토리보드로 협업을 진행할 경우 자기 파트 스토리보드를 분리해서 개발함
