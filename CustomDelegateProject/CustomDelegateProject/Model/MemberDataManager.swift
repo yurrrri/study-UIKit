@@ -28,12 +28,13 @@ struct MemberDataManager {
         memberList.append(member)
     }
     
+    mutating func updateMember(_ index: Int, _ member: Member) {
+        memberList[index] = member
+    }
+    
     subscript (_ index: Int) -> Member {
         get {
             return memberList[index]
-        }
-        set {
-            memberList[index] = newValue
         }
     }
     

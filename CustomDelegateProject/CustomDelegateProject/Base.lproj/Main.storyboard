@@ -83,19 +83,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zAr-Ta-er2" secondAttribute="trailing" id="xPf-f4-5E8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="회원 목록" id="HT2-OL-BWE">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="23P-Dw-WJf">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="euX-qR-1Il">
-                                <rect key="frame" x="22" y="5" width="355" height="34.333333333333336"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
-                                <connections>
-                                    <segue destination="7mp-9T-Erf" kind="show" identifier="toUpdate" id="LNE-oK-AAu"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="회원 목록" id="HT2-OL-BWE"/>
                     <connections>
                         <outlet property="tableView" destination="zAr-Ta-er2" id="Uvq-wZ-Uv9"/>
                     </connections>
@@ -141,7 +129,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

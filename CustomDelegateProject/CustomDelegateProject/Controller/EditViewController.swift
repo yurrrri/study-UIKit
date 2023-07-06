@@ -6,20 +6,20 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class EditViewController: UIViewController {
     
     private let profileView = ProfileView()
-    private lazy var button: UIButton = {
-        let button = profileView.saveButton
-        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-    }()
+    private lazy var button = profileView.saveButton
     
     var member: Member? {
         didSet {
             profileView.member = member
         }
     }
+    
+    weak var delegate: MemberDelegate?
     
     override func loadView() {
         view = profileView
@@ -29,6 +29,34 @@ final class EditViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupUI()
+    }
+    
+    func setupUI(){
+        
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchUpImageView))
+        profileView.mainImageView.addGestureRecognizer(tapGesture)
+        profileView.mainImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func touchUpImageView() {
+        setupImagePicker()
+    }
+    
+    func setupImagePicker() {
+        // 기본설정 셋팅
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 0
+        configuration.filter = .any(of: [.images, .videos])
+        
+        // 기본설정을 가지고, 피커뷰컨트롤러 생성
+        let picker = PHPickerViewController(configuration: configuration)
+        // 피커뷰 컨트롤러의 대리자 설정
+        picker.delegate = self
+        // 피커뷰 띄우기
+        self.present(picker, animated: true, completion: nil)
     }
     
     @objc func saveButtonTapped() {
@@ -46,7 +74,7 @@ final class EditViewController: UIViewController {
             Member(name: name, age: age, phone: phoneNumber, address: address)
             newMember.memberImage = profileView.mainImageView.image
             
-            //delegate?.addNewMember(newMember)
+            delegate?.addNewMember(newMember)
             
             
         // [2] 멤버가 있다면 (멤버의 내용을 업데이트 하기 위한 설정)
@@ -62,12 +90,34 @@ final class EditViewController: UIViewController {
             
             // 뷰에도 바뀐 멤버를 전달 (뷰컨트롤러 ==> 뷰)
             profileView.member = member
-            
+                        
             // 델리게이트 방식으로 구현⭐️
-            //delegate?.update(index: memberId, member!)
+            delegate?.update(index: memberId, member!)
         }
         
         // (일처리를 다한 후에) 전화면으로 돌아가기
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension EditViewController: PHPickerViewControllerDelegate {
+    
+    // 사진이 선택이 된 후에 호출되는 메서드
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        // 피커뷰 dismiss
+        picker.dismiss(animated: true)
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                DispatchQueue.main.async {
+                    // 이미지뷰에 표시
+                    self.profileView.mainImageView.image = image as? UIImage
+                }
+            }
+        } else {
+            print("이미지를 불러오지 못함")
+        }
     }
 }

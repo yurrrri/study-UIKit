@@ -13,6 +13,11 @@ final class ViewController: UIViewController {
     
     @IBOutlet weak var tableViewCell: UITableViewCell!
     @IBOutlet weak var tableView: UITableView!
+    lazy var plusButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(plusButtonTapped))
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,10 +25,21 @@ final class ViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        
+        
+        // 네비게이션바 오른쪽 상단 버튼 설정
+        self.navigationItem.rightBarButtonItem = self.plusButton
     }
     
-    @IBAction func toUpdate(_ sender: Any) {
-        self.performSegue(withIdentifier: "toUpdate", sender: self)
+    @objc func plusButtonTapped() {
+        // 다음화면으로 이동 (멤버는 전달하지 않음)
+        let editVC = EditViewController()
+        
+        editVC.delegate = self
+        
+        // 화면이동
+        navigationController?.pushViewController(editVC, animated: true)
     }
 }
 
@@ -48,7 +64,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let editVC = EditViewController()
         
         // 다음 화면의 대리자 설정 (다음 화면의 대리자는 지금 현재의 뷰컨트롤러)
-        //detailVC.delegate = self
+        editVC.delegate = self
         
         // 다음 화면에 멤버를 전달
         let currentMember = memberDataManager.getMemberList()[indexPath.row]
@@ -57,4 +73,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         // 화면이동
         navigationController?.pushViewController(editVC, animated: true)
     }
+}
+
+extension ViewController: MemberDelegate {
+    func addNewMember(_ member: Member) {
+        memberDataManager.insertNewMember(member)
+        tableView.reloadData()
+    }
+    
+    func update(index: Int, _ member: Member) {
+        memberDataManager.updateMember(index, member)
+        tableView.reloadData()
+    }
+    
+    
 }
