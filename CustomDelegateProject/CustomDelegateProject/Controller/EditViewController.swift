@@ -13,11 +13,7 @@ final class EditViewController: UIViewController {
     private let profileView = ProfileView()
     private lazy var button = profileView.saveButton
     
-    var member: Member? {
-        didSet {
-            profileView.member = member
-        }
-    }
+    var member: Member?
     
     weak var delegate: MemberDelegate?
     
@@ -35,6 +31,8 @@ final class EditViewController: UIViewController {
     func setupUI(){
         
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
+        profileView.member = member
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchUpImageView))
         profileView.mainImageView.addGestureRecognizer(tapGesture)
@@ -87,7 +85,7 @@ final class EditViewController: UIViewController {
             member!.age = Int(profileView.ageTextField.text ?? "") ?? 0
             member!.phone = profileView.phoneNumberTextField.text ?? ""
             member!.address = profileView.addressTextField.text ?? ""
-            
+                        
             // 뷰에도 바뀐 멤버를 전달 (뷰컨트롤러 ==> 뷰)
             profileView.member = member
                         
