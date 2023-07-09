@@ -1,6 +1,6 @@
 # study-UIKit
 
-앨런 Swift 문법 마스터스쿨 강의를 수강하며 UIKit 전반에 대해 복습하고, 관련해서 배운 점과 고민한 내용에 대해 정리하는 레포입니다.
+[앨런 iOS 앱 개발 강의](https://www.inflearn.com/course/ios-uikit-15apps)를 수강하며 UIKit 전반에 대해 복습하고, 관련해서 배운 점과 고민한 내용에 대해 정리하는 레포입니다.
 
 ## 1. 타이머와 슬라이더
 
@@ -136,6 +136,52 @@ https://github.com/devxoul/Then <br/>
 
 ### 배운점 및 회고
 
-**1. 네비게이션 / 탭바 컨트롤러 각각 스토리보드 / 코드 방식 구현  이해** <br/>
+**1. 네비게이션 / 탭바 컨트롤러 각각 스토리보드 / 코드 방식 구현 복습** <br/>
 **2. 스토리보드 분리에 대한 이해** <br/>
 - 스토리보드로 협업을 진행할 경우 자기 파트 스토리보드를 분리해서 개발함
+
+## 6. 네트워킹(URLSession) + GCD
+
+<img width="300" alt="image" src="https://github.com/yurrrri/study-UIKit/assets/37764504/8170eec3-48c7-4214-8739-a0433955d4eb">
+<img width="300" alt="image" src="https://github.com/yurrrri/study-UIKit/assets/37764504/2c5802a7-a6e8-4c1e-8e58-78a8d098d1f5">
+
+### 배운점 및 회고
+
+**1. content Hugging / Resistance에 대한 이해** <br/>
+- 오토레이아웃에서 intrinsicContentSize를 가진 뷰가 각각 더이상 늘어나지 않도록 / 줄어들지 않도록 제약을 가진 뷰 간에 우선순위를 조정 <br/>
+
+**2. 값이 바뀔수도 있는 내용 (마진값이나 서버 주소 등)은 enum이나 struct의 저장속성으로 묶으면 하드 코딩으로 인한 실수가 줄 뿐더러 값이 바뀔 경우 한번의 수정으로 인해 모든 코드를 수정하지 않아도 된다는 편리함이 존재함** <br/>
+- enum으로 하면 인스턴스를 생성하지 않아도 되니 편리
+```swift
+enum MusicApi {
+    static let url = "https://itunes.apple.com/search?"
+    static let param = "media=music"
+}
+```
+- 보통 서버 주소나 key값 같은 git에 올라가지 않아야 하는 내용들을 따로 Constant로 묶어서 gitignore에 넣어서 관리하면 좋음
+
+**3. 이미지가 있는 cell의 경우, cell의 재사용성으로 인해 잘못된 이미지가 섞여보일 수 있음을 인지하고 이에 대한 대응 방식 이해**
+```swift
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.imageView.image = nil
+    }
+```
+- 재사용되기 전에 이미지를 초기화하여 재사용했을 때 이미지를 새로 데이터를 받아와서 세팅하도록 함
+
+```swift
+        guard let urlString = self.imageUrl, let url = URL(string: urlString)  else { return }
+        
+        DispatchQueue.global().async {
+            guard let data = try? Data(contentsOf: url) else { return }
+            
+            guard urlString == url.absoluteString else { return }
+            
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data)
+            }
+        }
+```
+
+- 스크롤할 때 이미지 다운로드의 경우 상대적으로 오래걸리는 작업이므로, 해당 작업이 마치기도 전에 재사용되면서 url이 바뀔 수도 있으므로 url이 바뀌었다면 이미지가 바뀌지 않도록 방지
