@@ -26,7 +26,6 @@ final class MemberTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        memberImageView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,7 +36,6 @@ final class MemberTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.memberImageView.clipsToBounds = true
         self.memberImageView.layer.cornerRadius = self.memberImageView.frame.width / 2
     }
 
