@@ -65,6 +65,7 @@ https://github.com/devxoul/Then <br/>
 
 **2. 코드로 constraint를 줄 때는 반드시 translatesAutoresizingMaskIntoConstrains = false를 주자.**
 - 이 속성을 안주면 Autoresize를 디폴트로 하기때문에 수동으로 constraint를 줄 수 없다. (스토리보드는 이게 디폴트로 false로 되어있는데 code based ui일 때는 설정해줘야 하는 부분)
+- SnapKit을 사용하여 오토레이아웃을 코드로 짤 경우 이 속성을 라이브러리 내부에서 주고있기 때문에 따로 개발자가 설정할 필요가 없다.
 
 **3. NSLayoutConstraint vs Snapkit**
 - 코드로 레이아웃 짤 때 동료들이 모두 SnapKit을 쓰길래 나도 따라 썼던 기억이 나는데, 2가지 방식을 비교해보았다.
@@ -107,8 +108,6 @@ https://github.com/devxoul/Then <br/>
 
 **4. UIView.animate(withDuration: )을 통해 일정기간동안 뷰의 변화가 애니메이션을 통해 자연스럽게 발생할 수 있도록 적용**
 
-**5. Responder Chain과 firstResponder 개념 이해**
-
 ## 3. BMI 계산기(화면 전환) 
 
 <img src="https://github.com/yurrrri/study-UIKit/assets/37764504/efe8a3ce-f6a5-4d39-b40b-e5a6e5e386d5" width="250"/>
@@ -122,13 +121,8 @@ https://github.com/devxoul/Then <br/>
 **2. 기능 단위로 함수로 묶는 것이 코드의 가독성과 재사용성을 높인다.**
 - 의미 단위가 달라지면 반드시 함수를 따로 만들자.
 
-## 4.앱 생명주기 / 뷰 컨트롤러 생명주기 / Drawing Cycle
-
-### 배운점 및 회고
-
-**1. 앱 생명주기의 전반적인 cycle 이해** <br/>
-**2. 뷰 컨트롤러 생명주기의 전반적인 cycle 이해 및 활용** <br/>
-**3. 뷰의 Drawing Cycle 및 setNeedsDisplay / setNeedsLayout / ifLayoutNeeded 차이 이해** <br/>
+**3. 앱 생명주기의 전반적인 cycle 이해** <br/>
+**4. 뷰 컨트롤러 생명주기의 전반적인 cycle 이해 및 활용** <br/>
 
 ## 5. Navigation / Tabbar Controller
 
